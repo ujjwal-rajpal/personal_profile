@@ -1,4 +1,8 @@
 <?php
+// Setting up .env file
+$dotenv = Dotenv\Dotenv::create(__DIR__.'/..');
+// $dotenv = new Dotenv\Dotenv(__DIR__.'/..');
+$dotenv->load();
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production
@@ -14,6 +18,12 @@ return [
             'name' => 'slim-app',
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
+        ],
+        "db" => [
+            "host" => getenv('db_host'),
+            "dbname" => getenv('db_name'),
+            "user" => getenv('db_user'),
+            "pass" => getenv('db_password')
         ],
     ],
 ];
